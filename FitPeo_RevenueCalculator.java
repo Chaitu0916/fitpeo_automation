@@ -37,11 +37,11 @@ public class FitPeo_RevenueCalculator {
 		//verify the title of the page
 		if(driver.getTitle().equals("Remote Patient Monitoring (RPM) - fitpeo.com"))
 		{
-			System.out.println("we are on the fitpeo.HomePage");
+			System.out.println("we are on the fitpeo.Page");
 		}
 		else
 		{	
-			System.out.println("we are not on the fitpeo.HomePage");
+			System.out.println("we are not on the fitpeo.Page");
 			System.exit(1);
 		}
 		
@@ -52,6 +52,7 @@ public class FitPeo_RevenueCalculator {
 		
 		//Test Step 2: Navigate to the RevenueCalculatorPage
 		WebElement RevenueCalculatorPage_button = driver.findElement(By.xpath("//div[text()='Revenue Calculator']"));
+		RevenueCalculatorPage_button.isDisplayed();
 		RevenueCalculatorPage_button.click();
 		
 		//Test Step 3: Scroll Down to the slider selection
@@ -77,14 +78,24 @@ public class FitPeo_RevenueCalculator {
 		}
 		
 		//Test Step 5: update the value in the text field
-		System.out.println("Slider location X:" + Slider.getLocation().getX()+"Slider location Y:" + Slider.getLocation().getY());
-		textBox.sendKeys("560");
+				mouse.keyDown(Keys.TAB).keyUp(Keys.TAB).keyDown(Keys.BACK_SPACE).keyUp(Keys.BACK_SPACE).perform();
+				textBox.sendKeys("560");
+				
+						
+				//Test Step 6: Validate slider value
+				System.out.println("Slider location X:" + Slider.getLocation().getX()+"Slider location Y:" + Slider.getLocation().getY());
+			
+				if(textBox.getAttribute("value").equals("560"))
+				{
+					System.out.println("Slider value updated to 560");
+				}
+				else
+				{
+					System.out.println("Slider value not updated");
+				}
 		
-		//Test Step 6: Validate slider value
-		System.out.println("Slider location X:" + Slider.getLocation().getX()+"Slider location Y:" + Slider.getLocation().getY());
-		//control + z
-		mouse.keyDown(Keys.CONTROL).keyDown("z").keyUp("z").keyUp(Keys.DOWN).perform();
-		
+		//to set back the value cntrl+z
+			mouse.keyDown(Keys.CONTROL).keyDown("z").keyUp("z").keyUp(Keys.DOWN).perform();
 		
 		//Test step 7: Select CPT codes
 		String arr[] = {"CPT-99091","CPT-99453","CPT-99454","CPT-99474"};
